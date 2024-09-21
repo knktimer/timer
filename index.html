@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi Countdown Timers</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
+    body {
+      background-color: RGB(41,189,193);
+      font-family: 'Vazirmatn', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .timer-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .timer {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      width: 200px;
+    }
+    .timer h2 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .countdown {
+      font-size: 2em;
+      color: #333;
+    }
+    .expired {
+      font-size: 1.5em;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+<h1>پنج شمارش معکوس تا رویداد</h1>
+<div class="timer-container">
+  <div class="timer">
+    <h2>کنکور</h2>
+    <div class="countdown" id="countdown1"></div>
+  </div>
+  <div class="timer">
+    <h2>عید</h2>
+    <div class="countdown" id="countdown2"></div>
+  </div>
+  <div class="timer">
+    <h2>چهارشنبه</h2>
+    <div class="countdown" id="countdown3"></div>
+  </div>
+  <div class="timer">
+    <h2>فردا صبح</h2>
+    <div class="countdown" id="countdown4"></div>
+  </div>
+  <div class="timer">
+    <h2>امتحانات</h2>
+    <div class="countdown" id="countdown5"></div>
+  </div>
+</div>
+
+<script>
+  // Set static countdown dates
+  var countdownDates = [
+    new Date("2026-06-29T10:30:00").getTime(), // کنکور
+    new Date("2025-03-15T00:00:00").getTime(), // عید
+    new Date("2025-05-22T00:00:00").getTime()  // امتحانات
+  ];
+
+  // Calculate next Wednesday at 3:30 PM
+  function getNextWednesday() {
+    var now = new Date();
+    var dayOfWeek = now.getDay(); // 0 is Sunday, 3 is Wednesday
+    var daysUntilWednesday = (3 + 7 - dayOfWeek) % 7;
+    if (daysUntilWednesday === 0 && now.getHours() >= 15 && now.getMinutes() >= 30) {
+      daysUntilWednesday = 7; // If it's already Wednesday afternoon, get next Wednesday
+    }
+    var nextWednesday = new Date();
+    nextWednesday.setDate(now.getDate() + daysUntilWednesday);
+    nextWednesday.setHours(15, 30, 0, 0); // Set to 3:30 PM
+    return nextWednesday.getTime();
+  }
+
+  // Calculate next day at 7:00 AM
+  function getNextDayMorning() {
+    var nextDay = new Date();
+    nextDay.setDate(new Date().getDate() + 1);
+    nextDay.setHours(7, 0, 0, 0); // Set to 7:00 AM
+    return nextDay.getTime();
+  }
+
+  // Add calculated dynamic dates to the array
+  countdownDates.push(getNextWednesday()); // چهارشنبه
+  countdownDates.push(getNextDayMorning()); // فردا صبح
+
+  // Function to update countdowns
+  function updateCountdown(index, countDownDate, elementId) {
+    var x = setInterval(function() {
+      // Get the current date and time
+      var now = new Date().getTime();
+
+      // Calculate the time difference
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes, and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the corresponding element
+      document.getElementById(elementId).innerHTML = days + " روز " + hours + " ساعت " 
+        + minutes + " دقیقه " + seconds + " ثانیه ";
+
+      // If the countdown is over, display "Expired" message
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById(elementId).innerHTML = "<span class='expired'>زمان تمام شد!</span>";
+      }
+    }, 1000);
+  }
+
+  // Start the countdown for each timer
+  updateCountdown(0, countdownDates[0], 'countdown1'); // کنکور
+  updateCountdown(1, countdownDates[1], 'countdown2'); // عید
+  updateCountdown(2, countdownDates[3], 'countdown3'); // چهارشنبه
+  updateCountdown(3, countdownDates[4], 'countdown4'); // فردا صبح
+  updateCountdown(4, countdownDates[2], 'countdown5'); // امتحانات
+</script>
+
+</body>
+</html>
