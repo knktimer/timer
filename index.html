@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Good Times by Amin</title>
+  <title>Responsive Countdown Timers</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
 
@@ -14,31 +14,29 @@
       height: 100vh;
       overflow: hidden;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       color: #fff;
-      flex-direction: column;
       background: linear-gradient(135deg, rgba(29, 29, 29, 0.8), rgba(0, 0, 0, 0.8));
     }
 
     h1 {
       font-size: 2em;
       margin-bottom: 10px;
-      z-index: 1;
-      position: relative;
       text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+      z-index: 1;
     }
 
     .timer-container {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
+      gap: 10px;
       z-index: 1;
-      padding: 0 10px;
-      width: 100%; /* Ensure full width */
-      max-width: 600px; /* Limit max width for large screens */
-      flex: 1; /* Allow it to take available vertical space */
+      width: 100%;
+      max-width: 1200px;
+      padding: 10px;
     }
 
     .timer-column {
@@ -46,21 +44,21 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      flex: 1 1 200px;
+      flex: 1 1 100px;
       max-width: 240px;
-      width: 100%; /* Ensure full width for mobile */
+      width: 100%; /* Adjust full width */
     }
 
     .timer {
       padding: 15px;
-      border-radius: 20px;
+      border-radius: 15px;
       text-align: center;
       color: white;
+      width: 100%;
+      backdrop-filter: blur(15px);
+      background-color: rgba(254, 230, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(15px);
-      background-color: rgba(255, 255, 255, 0.1);
-      width: 100%;
     }
 
     .timer:hover {
@@ -69,15 +67,7 @@
     }
 
     .countdown {
-      font-size: 1.2em; 
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      border-radius: 10px;
-      transition: background-color 0.3s ease;
-    }
-
-    .countdown:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      font-size: 1.2em;
     }
 
     .expired {
@@ -85,17 +75,19 @@
       color: red;
     }
 
-    /* Background colors for timers */
-    .timer:nth-child(1) { background-color: rgba(106, 177, 215, 0.2); } /* عید */
-    .timer:nth-child(2) { background-color: rgba(255, 179, 71, 0.2); } /* امتحانات */
-    .timer:nth-child(3) { background-color: rgba(255, 105, 97, 0.2); } /* تابستان بعدی */
-    .timer:nth-child(4) { background-color: rgba(255, 255, 255, 0.2); } /* کنکور */
-
-    /* Title colors */
+    /* Title Colors */
     .title1 { color: #1e90ff; } /* عید */
     .title2 { color: #ffa502; } /* امتحانات */
     .title3 { color: #ff6348; } /* تابستان بعدی */
     .title4 { color: #28a745; } /* کنکور (green) */
+    .title5 { color: #fffb00; } /* Next School Day */
+
+    /* Timer Background Colors */
+    .timer:nth-child(1) { background-color: rgba(106, 177, 215, 0.2); }
+    .timer:nth-child(2) { background-color: rgba(255, 179, 71, 0.2); }
+    .timer:nth-child(3) { background-color: rgba(66, 115, 148, 0.2); }
+    .timer:nth-child(4) { background-color: rgba(60, 179, 113, 0.2); }
+    .timer:nth-child(5) { background-color: rgba(30, 144, 255, 0.2); }
 
     canvas {
       position: absolute;
@@ -104,24 +96,49 @@
       z-index: 0;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       h1 {
         font-size: 1.5em;
       }
 
       .timer {
         padding: 10px;
+        margin-bottom: 10px;
       }
 
       .countdown {
         font-size: 1em;
+      }
+
+      .timer-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.2em;
+      }
+
+      .timer {
+        padding: 8px;
+      }
+
+      .countdown {
+        font-size: 0.9em;
+      }
+
+      .timer-container {
+        padding: 0;
+        gap: 5px;
       }
     }
   </style>
 </head>
 <body>
 
-<h1>اتفاقات خوب زندگی:)</h1>
+<h1>شمارش معکوس رویدادها</h1>
 <div class="timer-container">
   <div class="timer-column">
     <h2 class="title1">عید</h2>
@@ -159,6 +176,15 @@
       <div class="countdown" id="countdown1_sec"></div>
     </div>
   </div>
+  <div class="timer-column">
+    <h2 class="title5">روز مدرسه بعدی</h2>
+    <div class="timer">
+      <div class="countdown" id="nextSchoolDay"></div>
+    </div>
+    <div class="timer">
+      <div class="countdown" id="nextSchoolDay_sec"></div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
@@ -170,45 +196,79 @@
     new Date("2026-06-29T10:30:00").getTime()  // کنکور
   ];
 
-  function updateCountdown(index, countDownDate, elementId, isSeconds) {
+  var schoolDays = [6, 0, 1, 2, 3]; // Saturday (6) to Wednesday (3)
+  
+  // Function to find the next school day at 7:15 a.m.
+  function getNextSchoolDay() {
+    var now = new Date();
+    var day = now.getDay();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var nextDay = null;
+    
+    if (schoolDays.includes(day) && (hour < 7 || (hour === 7 && minute < 15))) {
+      nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 15, 0); // Today 7:15 a.m.
+    } else {
+      var daysToAdd = 1;
+      while (!nextDay) {
+        var testDay = (day + daysToAdd) % 7;
+        if (schoolDays.includes(testDay)) {
+          nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysToAdd, 7, 15, 0);
+        }
+        daysToAdd++;
+      }
+    }
+    return nextDay.getTime();
+  }
+
+  var nextSchoolDay = getNextSchoolDay();
+
+  function startTimers() {
     var x = setInterval(function() {
       var now = new Date().getTime();
-      var distance = countDownDate - now;
+      var timers = [
+        { id: 'countdown1', end: countdownDates[3] }, // کنکور
+        { id: 'countdown2', end: countdownDates[0] }, // عید
+        { id: 'countdown4', end: countdownDates[1] }, // امتحانات
+        { id: 'countdown5', end: countdownDates[2] }, // تابستان بعدی
+        { id: 'nextSchoolDay', end: nextSchoolDay }    // Next school day
+      ];
 
-      var seconds = Math.floor(distance / 1000);
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      
-      if (isSeconds) {
-        document.getElementById(elementId).innerHTML = seconds + " ثانیه ";
-      } else {
-        document.getElementById(elementId).innerHTML = days + " روز " + hours + " ساعت " 
-          + minutes + " دقیقه " + seconds % 60 + " ثانیه ";
-      }
+      timers.forEach(timer => {
+        var distance = timer.end - now;
+        var seconds = Math.floor(distance / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
 
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById(elementId).innerHTML = "<span class='expired'>زمان تمام شد!</span>";
-      }
+        hours %= 24;
+        minutes %= 60;
+        seconds %= 60;
+
+        var timerDisplay = `${days} روز ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+        document.getElementById(timer.id).innerHTML = timerDisplay;
+
+        var secDisplay = Math.floor((timer.end - now) / 1000);
+        document.getElementById(timer.id + '_sec').innerHTML = `${secDisplay} ثانیه`;
+
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById(timer.id).innerHTML = "EXPIRED";
+          document.getElementById(timer.id + '_sec').innerHTML = "EXPIRED";
+        }
+      });
     }, 1000);
   }
 
-  updateCountdown(0, countdownDates[0], 'countdown2', false); // عید
-  updateCountdown(0, countdownDates[0], 'countdown2_sec', true); // عید in seconds
-  updateCountdown(1, countdownDates[1], 'countdown4', false); // امتحانات
-  updateCountdown(1, countdownDates[1], 'countdown4_sec', true); // امتحانات in seconds
-  updateCountdown(2, countdownDates[2], 'countdown5', false); // تابستان بعدی
-  updateCountdown(2, countdownDates[2], 'countdown5_sec', true); // تابستان بعدی in seconds
-  updateCountdown(3, countdownDates[3], 'countdown1', false); // کنکور
-  updateCountdown(3, countdownDates[3], 'countdown1_sec', true); // کنکور in seconds
+  startTimers();
 
-  var origin;
-  var frame = 0;
-  var flyBoxCount = 20;
-  var flyBoxes = [];
-  var flyBoxPause = 200;
+  // Add visualizer background
   var flyBoxColors = [];
+  var flyBoxes = [];
+  var flyBoxCount = 20;
+  var flyBoxPause = 200;
+  var frame = 0;
+  var origin;
 
   function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -220,11 +280,11 @@
       flyBoxes.push(box);
     }
 
-    flyBoxColors.push(color('#f2623a'));
-    flyBoxColors.push(color('#3af262'));
-    flyBoxColors.push(color('#623af2'));
-    flyBoxColors.push(color('#f23a58'));
-    flyBoxColors.push(color('#caf23a'));
+    flyBoxColors.push(color('#427394'));
+    flyBoxColors.push(color('#fee600'));
+    flyBoxColors.push(color('#427394'));
+    flyBoxColors.push(color('#fee600'));
+    flyBoxColors.push(color('#427394'));
   }
 
   function draw() {
