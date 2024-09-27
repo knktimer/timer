@@ -10,8 +10,8 @@
     body {
       font-family: 'Vazirmatn', sans-serif;
       margin: 0;
-      padding: 0;
-      height: 100vh;
+      padding: 10% ,100% ,10% ,10% ;
+      height: 100%;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -21,15 +21,18 @@
       background: linear-gradient(135deg, rgba(29, 29, 29, 0.8), rgba(0, 0, 0, 0.8));
     }
 
+    .titles{
+      margin: 10px;
+      padding: 0;
+    }
+
     #nametitle {
       color: rgba(255, 255, 255, 0.7);
-      text-align: center;
-      margin-bottom: 20px;
     }
 
     h1 {
       font-size: 2em;
-      margin: 0;
+      margin-bottom: 5px;
       text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
       z-index: 1;
     }
@@ -53,7 +56,6 @@
       flex: 1 1 100px;
       max-width: 240px;
       width: 100%; /* Adjust full width */
-      box-sizing: border-box; /* Ensures padding is included in width */
     }
 
     .timer {
@@ -66,7 +68,6 @@
       background-color: rgba(254, 230, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      overflow: hidden; /* Prevent content overflow */
     }
 
     .timer:hover {
@@ -110,8 +111,8 @@
       }
 
       .timer {
-        padding: 10px;
-        margin-bottom: 10px;
+        padding: 0px;
+        margin-bottom: 0px;
       }
 
       .countdown {
@@ -130,7 +131,7 @@
       }
 
       .timer {
-        padding: 8px;
+        padding: .45vh;
       }
 
       .countdown {
@@ -149,48 +150,48 @@
 <h1 id="nametitle">شمارش معکوس رویدادها</h1>
 <div class="timer-container">
   <div class="timer-column">
-    <h2 class="title1">عید</h2>
+    <h2 class="titles title1">عید</h2>
     <div class="timer">
-      <div class="countdown" id="countdown2"></div>
+      <div class="countdown" id="countdown2">-</div>
     </div>
     <div class="timer">
-      <div class="countdown" id="countdown2_sec"></div>
-    </div>
-  </div>
-  <div class="timer-column">
-    <h2 class="title2">امتحانات</h2>
-    <div class="timer">
-      <div class="countdown" id="countdown4"></div>
-    </div>
-    <div class="timer">
-      <div class="countdown" id="countdown4_sec"></div>
+      <div class="countdown" id="countdown2_sec">-</div>
     </div>
   </div>
   <div class="timer-column">
-    <h2 class="title3">تابستان بعدی</h2>
+    <h2 class="titles title2">امتحانات</h2>
     <div class="timer">
-      <div class="countdown" id="countdown5"></div>
+      <div class="countdown" id="countdown4">-</div>
     </div>
     <div class="timer">
-      <div class="countdown" id="countdown5_sec"></div>
-    </div>
-  </div>
-  <div class="timer-column">
-    <h2 class="title4">کنکور</h2>
-    <div class="timer">
-      <div class="countdown" id="countdown1"></div>
-    </div>
-    <div class="timer">
-      <div class="countdown" id="countdown1_sec"></div>
+      <div class="countdown" id="countdown4_sec">-</div>
     </div>
   </div>
   <div class="timer-column">
-    <h2 class="title5">روز مدرسه بعدی</h2>
+    <h2 class="titles title3">تابستان بعدی</h2>
     <div class="timer">
-      <div class="countdown" id="nextSchoolDay"></div>
+      <div class="countdown" id="countdown5">-</div>
     </div>
     <div class="timer">
-      <div class="countdown" id="nextSchoolDay_sec"></div>
+      <div class="countdown" id="countdown5_sec">-</div>
+    </div>
+  </div>
+  <div class="timer-column">
+    <h2 class="titles title4">کنکور</h2>
+    <div class="timer">
+      <div class="countdown" id="countdown1">-</div>
+    </div>
+    <div class="timer">
+      <div class="countdown" id="countdown1_sec">-</div>
+    </div>
+  </div>
+  <div class="timer-column">
+    <h2 class="titles title5">روز مدرسه بعدی</h2>
+    <div class="timer">
+      <div class="countdown" id="nextSchoolDay">-</div>
+    </div>
+    <div class="timer">
+      <div class="countdown" id="nextSchoolDay_sec">-</div>
     </div>
   </div>
 </div>
@@ -240,32 +241,119 @@
         { id: 'countdown2', end: countdownDates[0] }, // عید
         { id: 'countdown4', end: countdownDates[1] }, // امتحانات
         { id: 'countdown5', end: countdownDates[2] }, // تابستان بعدی
-        { id: 'nextSchoolDay', end: nextSchoolDay }  // روز مدرسه بعدی
+        { id: 'nextSchoolDay', end: nextSchoolDay }    // Next school day
       ];
 
-      for (var i = 0; i < timers.length; i++) {
-        var distance = timers[i].end - now;
-        var countdownElem = document.getElementById(timers[i].id);
-        var countdownElemSec = document.getElementById(timers[i].id + '_sec');
+      timers.forEach(timer => {
+        var distance = timer.end - now;
+        var seconds = Math.floor(distance / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+
+        hours %= 24;
+        minutes %= 60;
+        seconds %= 60;
+
+        var timerDisplay = `${days} روز ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+        document.getElementById(timer.id).innerHTML = timerDisplay;
+
+        var secDisplay = Math.floor((timer.end - now) / 1000);
+        document.getElementById(timer.id + '_sec').innerHTML = `${secDisplay} ثانیه`;
 
         if (distance < 0) {
-          countdownElem.innerHTML = "انقضا";
-          countdownElemSec.innerHTML = "";
-        } else {
-          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          countdownElem.innerHTML = days + " روز " + hours + " ساعت " + minutes + " دقیقه ";
-          countdownElemSec.innerHTML = seconds + " ثانیه ";
+          clearInterval(x);
+          document.getElementById(timer.id).innerHTML = "EXPIRED";
+          document.getElementById(timer.id + '_sec').innerHTML = "EXPIRED";
         }
-      }
+      });
     }, 1000);
   }
 
   startTimers();
 
+  // Add visualizer background
+  var flyBoxColors = [];
+  var flyBoxes = [];
+  var flyBoxCount = 0;
+  var flyBoxPause = 200;
+  var frame = 0;
+  var origin;
+
+  function setup() {
+    flyBoxCount = 100*random(random(0,3), random(3,100));
+    createCanvas(windowWidth, windowHeight);
+    origin = createVector(windowWidth / 2, windowHeight / 2);
+    
+    for (let i = -flyBoxCount / 2; i < flyBoxCount / 2; i++) {
+      let box = createFlyBox(i);
+      box.start();
+      flyBoxes.push(box);
+    }
+
+    flyBoxColors.push(color('#427394'));
+    flyBoxColors.push(color('#99e89b'));
+    flyBoxColors.push(color('#dc7933'));
+    flyBoxColors.push(color('#fee600'));
+    flyBoxColors.push(color('#ee353e'));
+  }
+
+  function draw() {
+    background(0, 0, 0, 10);
+    rectMode(CENTER);
+    for (let i = 0; i < flyBoxCount; i++) {
+      let flyBox = flyBoxes[i];
+      flyBox.draw();
+    }
+
+    stroke(255, 255, 255, 100);
+    strokeWeight(4000);
+    noFill();
+    translate(origin.x, origin.y);
+    rotate((sin(frame * (100*random(1, 2))) + cos(frame * (100*random(1, 2)))) * PI);
+    frame += 1;
+  }
+
+  function createFlyBox(offset) {
+    return {
+      offset: offset,
+      delay: 0,
+      getRandomDelay: () => { return random(0, flyBoxCount) * random(4, 6); },
+      steps: 0,
+      directions: [createVector(-51, -1), createVector(-10, 1), createVector(1, -10), createVector(1, 1)],
+      currentDirection: 0,
+      iteration: 0,
+      size: 10*random(1, 5),
+      start: function() {
+        this.delay = this.getRandomDelay();
+        this.steps = -this.delay;
+      },
+      draw: function() {
+        this.steps += (15, 25);
+        if (this.steps < 0) {
+          return;
+        }
+        
+        fill(flyBoxColors[this.iteration]);
+        noStroke();
+        var dir = this.directions[this.currentDirection];
+        rect(
+          -dir.x * this.steps + origin.x + dir.x * origin.x - dir.x * this.offset * (this.size * random(0, 1)),
+          -dir.y * this.steps + origin.y + dir.y * origin.y + dir.y * this.offset * (this.size * random(0, 1)),
+          this.size, this.size
+        );
+        
+        if (this.steps > max(windowWidth, windowHeight)) {
+          var newDelay = this.getRandomDelay();
+          this.steps = -flyBoxPause + this.delay - newDelay;
+          this.delay = newDelay;
+          this.currentDirection = (this.currentDirection + 1) % 4;
+          this.iteration = (this.iteration + 1) % flyBoxColors.length;
+        }
+      }
+    };
+  }
 </script>
+
 </body>
 </html>
