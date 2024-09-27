@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Good Times by Amin</title>
+  <title>Responsive Countdown Timers</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
 
@@ -19,6 +19,10 @@
       justify-content: center;
       color: #fff;
       background: linear-gradient(135deg, rgba(29, 29, 29, 0.8), rgba(0, 0, 0, 0.8));
+    }
+
+    #nametitle {
+      color: rgba(255, 255, 255, 0.7);
     }
 
     h1 {
@@ -138,7 +142,7 @@
 </head>
 <body>
 
-<h1>اتفاقات خوب زندگی:)</h1>
+<h1 id="nametitle">شمارش معکوس رویدادها</h1>
 <div class="timer-container">
   <div class="timer-column">
     <h2 class="title1">عید</h2>
@@ -189,6 +193,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 <script>
+
   var countdownDates = [
     new Date("2025-03-15T00:00:00").getTime(), // عید
     new Date("2025-05-22T00:00:00").getTime(), // امتحانات
@@ -265,12 +270,13 @@
   // Add visualizer background
   var flyBoxColors = [];
   var flyBoxes = [];
-  var flyBoxCount = 20;
+  var flyBoxCount = 0;
   var flyBoxPause = 200;
   var frame = 0;
   var origin;
 
   function setup() {
+    flyBoxCount = 100*random(random(0,3), random(3,100));
     createCanvas(windowWidth, windowHeight);
     origin = createVector(windowWidth / 2, windowHeight / 2);
     
@@ -281,10 +287,10 @@
     }
 
     flyBoxColors.push(color('#427394'));
+    flyBoxColors.push(color('#99e89b'));
+    flyBoxColors.push(color('#dc7933'));
     flyBoxColors.push(color('#fee600'));
-    flyBoxColors.push(color('#427394'));
-    flyBoxColors.push(color('#fee600'));
-    flyBoxColors.push(color('#427394'));
+    flyBoxColors.push(color('#ee353e'));
   }
 
   function draw() {
@@ -296,10 +302,10 @@
     }
 
     stroke(255, 255, 255, 100);
-    strokeWeight(40);
+    strokeWeight(4000);
     noFill();
     translate(origin.x, origin.y);
-    rotate((sin(frame * 0.02) + cos(frame * 0.03)) * PI);
+    rotate((sin(frame * (100*random(1, 2))) + cos(frame * (100*random(1, 2)))) * PI);
     frame += 1;
   }
 
@@ -307,18 +313,18 @@
     return {
       offset: offset,
       delay: 0,
-      getRandomDelay: () => { return random(0, flyBoxCount) * 15; },
+      getRandomDelay: () => { return random(0, flyBoxCount) * random(4, 6); },
       steps: 0,
-      directions: [createVector(-1, -1), createVector(-1, 1), createVector(1, -1), createVector(1, 1)],
+      directions: [createVector(-51, -1), createVector(-10, 1), createVector(1, -10), createVector(1, 1)],
       currentDirection: 0,
       iteration: 0,
-      size: 80,
+      size: 10*random(1, 5),
       start: function() {
         this.delay = this.getRandomDelay();
         this.steps = -this.delay;
       },
       draw: function() {
-        this.steps += 20;
+        this.steps += (15, 25);
         if (this.steps < 0) {
           return;
         }
@@ -327,8 +333,8 @@
         noStroke();
         var dir = this.directions[this.currentDirection];
         rect(
-          -dir.x * this.steps + origin.x + dir.x * origin.x - dir.x * this.offset * (this.size * 0.75),
-          -dir.y * this.steps + origin.y + dir.y * origin.y + dir.y * this.offset * (this.size * 0.75),
+          -dir.x * this.steps + origin.x + dir.x * origin.x - dir.x * this.offset * (this.size * random(0, 1)),
+          -dir.y * this.steps + origin.y + dir.y * origin.y + dir.y * this.offset * (this.size * random(0, 1)),
           this.size, this.size
         );
         
