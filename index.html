@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Good Times by Amin</title>
+  <title>Responsive Countdown Timers</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
-
+    @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
     body {
       font-family: 'Vazirmatn', sans-serif;
       margin: 0;
@@ -35,6 +35,41 @@
       margin-bottom: 5px;
       text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
       z-index: 1;
+    }
+
+    h2 {
+      color: rgba(255, 255, 255, .8);
+      margin-bottom: 2px;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    #me1 {
+      margin-top: 25px;
+      margin-bottom: -5px;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+      z-index: 1;
+      opacity: .7;
+      font-family: "Bodoni Moda", serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    #me2 {
+      margin: 0;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+      z-index: 1;
+      opacity: .7;
+      font-family: "Bodoni Moda", serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    a {
+      margin: 0;
+      color: beige;
     }
 
     .timer-container {
@@ -84,6 +119,8 @@
       color: red;
     }
 
+
+
     /* Title Colors */
     .title1 { color: #1e90ff; } /* عید */
     .title2 { color: #ffa502; } /* امتحانات */
@@ -128,6 +165,10 @@
     @media (max-width: 480px) {
       h1 {
         font-size: 1.2em;
+      }
+
+      h2 {
+        opacity: 0;
       }
 
       .timer {
@@ -196,6 +237,12 @@
   </div>
 </div>
 
+<div id="me1">Made by</div>
+<div id="me2"><a href="mailto:officialaminazizzadeh@gmail.com">Amin Azizzadeh</a></div>
+
+<h2>الفُرصَةُ تَمُرُّ مَرَّ السَّحابِ ،فانتَهِزُوا فُرَصَ الخَيرِ</h2>
+<h2>فرصت ها همانند ابر می گذرند.  پس هرگاه فرصت  خیری پیش آمد آن را مغتنم بشمارید</h2>
+<h2>-امیرالمؤمنین (ع)-</h2>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 <script>
 
