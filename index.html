@@ -21,13 +21,18 @@
       background: linear-gradient(135deg, rgba(29, 29, 29, 0.8), rgba(0, 0, 0, 0.8));
     }
 
+    ::selection {
+      color: #003223;
+      background-color: beige;
+    }
+
     .titles{
       margin: 10px;
       padding: 0;
     }
 
     #nametitle {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgb(245, 245, 210);
     }
 
     h1 {
@@ -38,10 +43,15 @@
     }
 
     Q {
-      color: rgba(255, 255, 255, .8);
+      color: rgba(245, 245, 220, .8);
       margin-bottom: 2px;
       text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
       z-index: 1;
+    }
+
+    Q::selection {
+      color: #003223;
+      background-color: beige;
     }
 
     #me1 {
